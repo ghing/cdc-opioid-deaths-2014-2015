@@ -1,0 +1,26 @@
+{
+  "name": "cdc-opiod-deaths-2014-2015",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Geoff Hing <geoffhing@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "d3": "^4.7.4"
+  },
+  "devDependencies": {
+    "browserify": "^14.3.0",
+    "http-server": "^0.9.0",
+    "node-sass": "^4.5.2",
+    "watchify": "^3.9.0",
+    "yarn-run-all": "^3.1.1"
+  },
+  "scripts": {
+    "build:js": "browserify --standalone OpioidDeathsViz -o js/opioiddeaths.js  js/src/opioiddeaths.js ",
+    "build:sass": "node-sass sass/opioiddeaths.scss > css/opioiddeaths.css",
+    "build": "run-p build:*",
+    "watch:js": "watchify --standalone OpioidDeathsViz -o js/opioiddeaths.js js/src/opioiddeaths.js",
+    "watch:sass": "node-sass --watch --recursive --output css sass",
+    "watch": "run-p watch:*",
+    "serve": "http-server ./"
+  }
+}

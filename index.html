@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/opioiddeaths.css">
+</head>
+<body>
+  <h1 class="chart-title">Deaths from synthetic opiod overdoses increased in nearly every state</h1>
+  <div id="opioid-viz-container" class="opioid-viz-container"></div>
+  <script src="js/opioiddeaths.js"></script>
+  <script>
+    (function(OpioidDeathsViz) {
+      var viz = new OpioidDeathsViz(document.getElementById('opioid-viz-container'));
+    })(window.OpioidDeathsViz);
+  </script>
+</body>
+</html>
