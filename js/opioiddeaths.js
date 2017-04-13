@@ -22,7 +22,7 @@ function render(container, data, prop1, prop2) {
   // Empty the container
   container.selectAll('*').remove();
 
-  var margin = {top: 20, right: 10, bottom: 50, left: 100};
+  var margin = {top: 20, right: 28, bottom: 50, left: 80};
   var circleRadius = 4;
   var lineStroke = 3;
 
@@ -110,6 +110,28 @@ function render(container, data, prop1, prop2) {
       .attr('cy', function(d) { return yScale(d.state); })
       .attr('fill', function(d) { return fillColorScale(getYear(prop2)); })
       .attr('stroke', function(d) { return strokeColorScale(getYear(prop2)); });
+
+  // Add percent change labels
+  var pctFormat = d3.format("+.1%");
+
+  var labels = svg.append('g')
+      .attr('class', 'dot-labels')
+    .selectAll('.dot-label')
+      .data(data)
+    .enter().append('text')
+      .attr('class', 'dot-label')
+      .attr('x', function(d) {
+        // Handle cases where there's a decrease
+        var circleX = d3.max([xScale(d[prop1]), xScale(d[prop2])]);
+        return circleX + (circleRadius * 2);
+      })
+      .attr('y', function(d) { return yScale(d.state); })
+      .attr('alignment-baseline', 'central')
+      .attr('font-size', 10)
+      .text(function(d) {
+        var pct = ((d[prop2] - d[prop1]) / d[prop1]);
+        return pctFormat(pct);
+      });
 
   svg.append('g')
     .attr('transform', 'translate(' + -5 + ',' + 0 + ')')
