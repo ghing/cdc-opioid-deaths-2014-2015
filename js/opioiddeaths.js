@@ -22,7 +22,7 @@ function render(container, data, prop1, prop2) {
   // Empty the container
   container.selectAll('*').remove();
 
-  var margin = {top: 20, right: 10, bottom: 20, left: 100};
+  var margin = {top: 20, right: 10, bottom: 50, left: 100};
   var circleRadius = 4;
   var lineStroke = 3;
 
@@ -123,6 +123,17 @@ function render(container, data, prop1, prop2) {
     .attr('transform', 'translate(' + 0 + ',' + height + ')')
     .call(xAxis);
 
+  svg.append('g')
+      .attr('transform', 'translate(' + (width / 2) + ',' + (height + 40) + ')')
+      .attr('class', 'axis-label axis-label--x')
+      .attr('text-anchor', 'middle')
+      .attr('font-family', 'sans-serif')
+      .attr('font-size', 10)
+      .attr('font-weight', 'bold')
+    .append('text')
+      .text("Overdose deaths per 100,000 people");
+
+  // Add a legend
   var legend = svg.append('g')
       .attr('class', 'legend')
       .attr('font-family', 'sans-serif')
@@ -140,6 +151,7 @@ function render(container, data, prop1, prop2) {
       .text(getYear(prop1))
       .attr('alignment-baseline', 'central');
 
+  // HACK: very hard-coded legend label positioning
   var start2015 = ((circleRadius * 2) + 50);
   legend.append('circle')
       .attr('r', circleRadius)
@@ -154,6 +166,8 @@ function render(container, data, prop1, prop2) {
       .text(getYear(prop2))
       .attr('alignment-baseline', 'central');
 
+  // Center the legend
+  // HACK: Lots of hard coding here
   var legendBBox = legend.node().getBBox();
   var legendX = (((width) / 2) - (legendBBox.width / 2));
   legend.attr('transform', 'translate(' + legendX  + ',' + -10 + ')');
